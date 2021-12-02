@@ -1,24 +1,33 @@
-import Augmenter from "./model/augmenter";
+import Augmenter from "./model/Augmenter";
 import { cwd } from "process";
-import { IntentAndTrain } from "./model/train";
+import { Wit } from "./model/Wit";
+import { WitToken } from "./secret";
 
-// (() => {
-//     populate(
-//         "Τι είναι το Powerspin;",
-//         "To Powerspin είναι ένα νέο παιχνίδι από τον ΟΠΑΠ. Ένας εικονικός τροχός γυρίζει και κληρώνει έναν αριθμό ή σύμβολο, που αποτελεί το νικητήριο αποτέλεσμα. Ο τροχός περιέχει 24 αριθμούς από το 1 έως το 24 χωρισμένους σε 3 ίσες χρωματικές ζώνες αλλά και 3 ίδια σύμβολα. Σε κάθε περιστροφή του τροχού, ο σταθερός δείκτης ορίζει το νικητήριο αποτέλεσμα.",
-//         "powerspin_info"
-//     );
-// })();
+(() => {
+    const wit = new Wit(WitToken);
+    // populate(
+    //     "Μπορώ να συνδυάσω παιχνίδια στα Virtuals;",
+    //     "Μπορείς να παίξεις παρολί συνδυάζοντας παιχνίδια από το ίδιο άθλημα ή και από διαφορετικά αθλήματα.",
+    //     "virtual_sports_combine_info"
+    // );
+    wit.Meaning("πως υπολογισμος cash out");
+    wit.Train([{
+            text: "Content",
+            intent: "key",
+            entities: [],
+            traits: [],
+    }])
+})();
 
-export async function populate(qst: string, ans: string, key: string) {
-    const augmenter = new Augmenter(cwd() + "/src/datasets");
-    augmenter.push([
-        {
-            qst,
-            ans,
-            key,
-        },
-    ]);
-    await augmenter.byTranslation();
-    IntentAndTrain(key,augmenter.getReadyForTrain(key));
-}
+// export async function populate(qst: string, ans: string, key: string) {
+//     const augmenter = new Augmenter(cwd() + "/src/datasets");
+//     augmenter.push([
+//         {
+//             qst,
+//             ans,
+//             key,
+//         },
+//     ]);
+//     await augmenter.byTranslation();
+//     IntentAndTrain(key, augmenter.getReadyForTrain(key));
+// }
